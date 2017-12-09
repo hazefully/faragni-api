@@ -67,11 +67,7 @@ class RatingsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def rating_params
       p = params.permit(:Rating, :Review, :MovieID)
-      p[:rating] = p[:Rating]
-      p[:review] = p[:Review]
       p[:movie_id] = p[:MovieID]
-      p.delete :Rating
-      p.delete :Review
       p.delete :MovieID
       p[:user_id] = current_user.id
       return p

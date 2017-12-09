@@ -46,6 +46,7 @@ class RatingsController < ApplicationController
   # DELETE /ratings/1
   def destroy
     @rating.destroy
+    redirect_to user_ratings_url(current_user)
   end
 
   private

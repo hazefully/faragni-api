@@ -24,7 +24,7 @@ class Movie < ApplicationRecord
 
     def Genre
         ret = ""
-        self.genres.each{|genre| ret += "#{genre.name}, "}
+        self.genres.each{|genre| ret += "#{genre.Name}, "}
         return ret.chomp(", ");
     end
 

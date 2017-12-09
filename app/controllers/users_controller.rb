@@ -70,7 +70,7 @@ class UsersController < ApplicationController
     end
   end
 
-  def following_him
+  def follows_him
     if current_user.followings.where(id: params[:user_id]).present?
       render json: {:following_him => "true"}.to_json, status: :ok
     else

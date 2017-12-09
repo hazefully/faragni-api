@@ -32,7 +32,7 @@ Rails.application.routes.draw do
     get '/movies/genre/:genre', to: 'movies#index'
     
     resources :recommendations, only:[:index, :show] do
-      patch '/rate', to: 'recommendations#update'
+      put '/rate', to: 'recommendations#update'
     end
     resources :genres
 

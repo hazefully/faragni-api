@@ -5,4 +5,5 @@ class Rating < ApplicationRecord
 
   alias_attribute :MovieID, :movie_id
   alias_attribute :UserID, :user_id
+  alias_attribute :RatingID, :id
 end

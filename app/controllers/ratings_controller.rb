@@ -15,12 +15,12 @@ class RatingsController < ApplicationController
       end
     end
 
-    render json: @ratings.to_json(:except => [:movie_id, :user_id], :methods => [:MovieID, :UserID])
+    render json: @ratings.to_json(:except => [:movie_id, :user_id, :id], :methods => [:MovieID, :UserID, :RatingID])
   end
 
   # GET /ratings/1
   def show
-    render json: @rating.to_json(:except => [:movie_id, :user_id], :methods => [:MovieID, :UserID])
+    render json: @rating.to_json(:except => [:movie_id, :user_id, :id], :methods => [:MovieID, :UserID, :RatingID])
   end
 
   # POST /ratings
@@ -28,7 +28,7 @@ class RatingsController < ApplicationController
     @rating = Rating.new(rating_params)
 
     if @rating.save
-      render json: @rating.to_json(:except => [:movie_id, :user_id], :methods => [:MovieID, :UserID]), status: :created, location: @rating
+      render json: @rating.to_json(:except => [:movie_id, :user_id, :id], :methods => [:MovieID, :UserID, :RatingID]), status: :created, location: @rating
     else
       render json: @rating.errors, status: :unprocessable_entity
     end
@@ -37,7 +37,7 @@ class RatingsController < ApplicationController
   # PATCH/PUT /ratings/1
   def update
     if @rating.update(rating_params)
-      render json: @rating.to_json(:except => [:movie_id, :user_id], :methods => [:MovieID, :UserID])
+      render json: @rating.to_json(:except => [:movie_id, :user_id, :id], :methods => [:MovieID, :UserID, :RatingID])
     else
       render json: @rating.errors, status: :unprocessable_entity
     end

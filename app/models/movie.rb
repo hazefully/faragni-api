@@ -16,12 +16,13 @@ class Movie < ApplicationRecord
     # do_not_validate_attachment_file_type :Poster    
     
     attr_accessor :poster_base
+    alias_attribute :MovieID, :id
 
     def Poster_url
         add_host_prefix(self.Poster.url)
     end
 
-    def Genres
+    def Genre
         ret = ""
         self.genres.each{|genre| ret += "#{genre.name}, "}
         return ret.chomp(", ");

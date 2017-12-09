@@ -14,7 +14,7 @@ CSV.foreach("lib/movies.csv", :headers => true) do |row|
   imdb_movie = RestClient.get "https://www.omdbapi.com/?i=tt#{imdb_id}&apikey=ddd4a842";
   movie_json = JSON.parse(imdb_movie.body)
   movie_json =  Hash[movie_json.map{|(k,v)| [k.to_sym,v]}]
-  [:Response, :DVD, :Production, :Type, :Awards, :Plot, :Rated, :Ratings].each do |key|
+  [:Response, :DVD, :Production, :Type, :Rated, :Ratings].each do |key|
     movie_json.delete key
   end
   movie_json[:genres] = Genre.get_genres_from_string(movie_json[:Genre])

@@ -5,6 +5,7 @@ class CreateMovies < ActiveRecord::Migration[5.1]
       t.string :imdbVotes, null: true
       t.decimal :imdbRating, null: true
       t.string :Title
+      t.string :Awards
       t.string :Language, null: true
       t.string :TagLine, null: true
       t.date :ReleaseDate, null: true

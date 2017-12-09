@@ -15,12 +15,12 @@ class MoviesController < ApplicationController
         @movies = @movies.all
       end
     end
-    render json: @movies.to_json(:methods => [:Poster_url, :Genres])
+    render json: @movies.to_json(:except => :id, :methods => [:Poster_url, :Genre, :MovieID])
   end
 
   # GET /movies/1
   def show
-    render json: @movie.to_json(:methods => [:Poster_url, :Genres])    
+    render json: @movie.to_json(:except => :id, :methods => [:Poster_url, :Genre, :MovieID])
   end
 
   # POST /movies
@@ -28,7 +28,7 @@ class MoviesController < ApplicationController
     @movie = Movie.new(create_movie_params)
 
     if @movie.save
-      render json: @movie.to_json(:methods => [:Poster_url, :Genres]), status: :created, location: @movie
+      render json: @movie.to_json(:except => :id, :methods => [:Poster_url, :Genre, :MovieID])
     else
       render json: @movie.errors, status: :unprocessable_entity
     end
@@ -37,7 +37,7 @@ class MoviesController < ApplicationController
   # PATCH/PUT /movies/1
   def update
     if @movie.update(movie_params)
-      render json: @movie.to_json(:methods => [:Poster_url, :Genres])
+      render json: @movieto_json(:except => :id, :methods => [:Poster_url, :Genre, :MovieID])
     else
       render json: @movie.errors, status: :unprocessable_entity
     end
@@ -53,13 +53,13 @@ class MoviesController < ApplicationController
   def get_new_recommendations
     user = current_user
     @recommended_movies = RecommendationEngine::Recommender.recommend(user)
-    render json: @recommended_movies.to_json(:methods => [:Poster_url, :Genres])
+    render json: @recommended_movies.to_json(:except => :id, :methods => [:Poster_url, :Genre, :MovieID])
   end
 
   # GET /movies/:movie_id/add_to_watchlist
   def add_to_watchlist
     if current_user.add_to_watchlist(params[:movie_id])
-      render json: current_user.watchlist.to_json(:methods => [:Poster_url, :Genres])
+      render json: current_user.watchlist.to_json(:except => :id, :methods => [:Poster_url, :Genre, :MovieID])
     else
       render json: current_user.errors, status: :unprocessable_entity
     end
@@ -68,7 +68,7 @@ class MoviesController < ApplicationController
   # GET /movies/:movie_id/remove_from_watchlist
   def remove_from_watchlist
     if current_user.remove_from_watchlist(params[:movie_id])
-      render json: current_user.watchlist.to_json(:methods => [:Poster_url, :Genres])
+      render json: current_user.watchlist.to_json(:methods => [:Poster_url, :Genre])
     else
       render json: current_user.errors, status: :unprocessable_entity
     end
@@ -98,9 +98,9 @@ class MoviesController < ApplicationController
     end
     
     def movie_params
-      p = params.permit(:imdbID, :imdbVotes, :imdbRating, :Title, :Language, :TagLine, :ReleaseDate, :Poster_url, :Popularity, :Actors, :BoxOffice, :Country, :Genres, :Director, :Metascore, :Plot, :Runtime, :Website, :Writer, :Year, :ProductionCompany, :criteria)
-      p[:genres] = Genre.get_genres_from_string(p[:Genres])
-      p.delete :Genres
+      p = params.permit(:imdbID, :imdbVotes, :imdbRating, :Title, :Language, :TagLine, :ReleaseDate, :Poster_url, :Popularity, :Actors, :BoxOffice, :Country, :Genre, :Director, :Metascore, :Plot, :Runtime, :Website, :Writer, :Year, :ProductionCompany, :criteria)
+      p[:Genre] = Genre.get_genres_from_string(p[:Genre])
+      p.delete :Genre
       p.delete :ProductionCompany
       return p
     end

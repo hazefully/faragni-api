@@ -37,7 +37,7 @@ class MoviesController < ApplicationController
   # PATCH/PUT /movies/1
   def update
     if @movie.update(movie_params)
-      render json: @movieto_json(:except => :id, :methods => [:Poster_url, :Genre, :MovieID])
+      render json: @movie.to_json(:except => :id, :methods => [:Poster_url, :Genre, :MovieID])
     else
       render json: @movie.errors, status: :unprocessable_entity
     end

@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(version: 20171208002303) do
   end
 
   create_table "genres", force: :cascade do |t|
-    t.string "name"
+    t.string "Name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -86,13 +86,11 @@ ActiveRecord::Schema.define(version: 20171208002303) do
     t.string "imdbVotes"
     t.decimal "imdbRating"
     t.string "Title"
+    t.string "Awards"
     t.string "Language"
     t.string "TagLine"
     t.date "ReleaseDate"
-    t.string "Poster_file_name"
-    t.string "Poster_content_type"
-    t.integer "Poster_file_size"
-    t.datetime "Poster_updated_at"
+    t.string "Poster"
     t.boolean "Adult"
     t.decimal "Popularity"
     t.string "Actors"
@@ -107,6 +105,7 @@ ActiveRecord::Schema.define(version: 20171208002303) do
     t.integer "Year"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["imdbID"], name: "index_movies_on_imdbID", unique: true
   end
 
   create_table "movies_tags", id: false, force: :cascade do |t|
@@ -125,13 +124,14 @@ ActiveRecord::Schema.define(version: 20171208002303) do
   end
 
   create_table "ratings", force: :cascade do |t|
-    t.decimal "rating"
-    t.text "review"
+    t.decimal "Rating"
+    t.text "Review"
     t.bigint "user_id"
     t.bigint "movie_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["movie_id"], name: "index_ratings_on_movie_id"
+    t.index ["user_id", "movie_id"], name: "index_ratings_on_user_id_and_movie_id", unique: true
     t.index ["user_id"], name: "index_ratings_on_user_id"
   end
 
@@ -155,17 +155,14 @@ ActiveRecord::Schema.define(version: 20171208002303) do
 
   create_table "users", force: :cascade do |t|
     t.string "FirstName"
-    t.string "LastMame"
+    t.string "LastName"
     t.date "DateOfBirth"
     t.string "UserName", null: false
     t.string "Email", null: false
     t.string "password_digest"
     t.date "JoiningDate", default: -> { "now()" }, null: false
     t.string "bio"
-    t.string "profilePic_file_name"
-    t.string "profilePic_content_type"
-    t.integer "profilePic_file_size"
-    t.datetime "profilePic_updated_at"
+    t.string "profilePic_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["Email"], name: "index_users_on_Email", unique: true

@@ -9,7 +9,7 @@ class CreateMovies < ActiveRecord::Migration[5.1]
       t.string :Language, null: true
       t.string :TagLine, null: true
       t.date :ReleaseDate, null: true
-      t.attachment :Poster
+      t.string :Poster
       t.boolean :Adult, null: true
       t.decimal :Popularity, null: true
       t.string :Actors, null: true

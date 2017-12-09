@@ -89,8 +89,6 @@ class UsersController < ApplicationController
 
     def create_user_params
       p = user_params
-      p[:profilePic_base] = p[:profilePic_url] if p[:profilePic_url].present?
-      p.delete :profilePic_url
       p[:password] = p[:Password] if p[:Password].present?
       p.delete :Password
       return p

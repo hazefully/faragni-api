@@ -8,7 +8,7 @@ class MoviesController < ApplicationController
     if @single_user.present?
       @movies = @single_user.watchlist
     else
-      @movies = params[:genre].present?? Genre.where(name: params[:genre]).first.movies : Movie.all
+      @movies = params[:genre].present?? Genre.where(Name: params[:genre]).first.movies : Movie.all
       if(params[:criteria].present?)
         @movies = @movies.order(params[:criteria].to_sym).all
       else

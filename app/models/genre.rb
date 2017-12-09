@@ -5,7 +5,7 @@ class Genre < ApplicationRecord
         return [] if genres_cs.blank?
         names = genres_cs.split(',')
         genres = []
-        names.each{|g_name| genres << Genre.find_or_create_by(name: g_name.lstrip.rstrip)}
+        names.each{|g_name| genres << Genre.find_or_create_by(Name: g_name.lstrip.rstrip)}
         return genres
     end
 end

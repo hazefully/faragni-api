@@ -26,7 +26,6 @@ CSV.foreach("lib/movies.csv", :headers => true) do |row|
   new_movie = Movie.new(movie_json)
   new_movie.Poster = movie_json[:Poster];
   new_movie.save
-  break
 end
 
 

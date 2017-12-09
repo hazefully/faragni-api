@@ -46,7 +46,7 @@ class RatingsController < ApplicationController
   # DELETE /ratings/1
   def destroy
     @rating.destroy
-    render json: @current_user.ratings.to_json(:except => [:movie_id, :user_id, :id], :methods => [:MovieID, :UserID, :RatingID])
+    render json: current_user.ratings.to_json(:except => [:movie_id, :user_id, :id], :methods => [:MovieID, :UserID, :RatingID])
   end
 
   private

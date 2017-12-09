@@ -62,6 +62,22 @@ class UsersController < ApplicationController
     end
   end
 
+  def follows_me
+    if current_user.followers.where(id: params[:user_id]).present?
+      render json: {:follows_me => "true"}.to_json, status: :ok
+    else
+      render json: {:follows_me => "false"}.to_json, status: :ok
+    end
+  end
+
+  def following_him
+    if current_user.followings.where(id: params[:user_id]).present?
+      render json: {:following_him => "true"}.to_json, status: :ok
+    else
+      render json: {:following_him => "false"}.to_json, status: :ok
+    end
+  end 
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user

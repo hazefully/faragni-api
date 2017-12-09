@@ -10,6 +10,8 @@ Rails.application.routes.draw do
       post '/recommend', to: 'recommendations#create'
       get '/follow', to: 'users#follow'
       get '/unfollow', to: 'users#unfollow'
+      get '/follows_me', to: 'users#follows_me'
+      get '/follows_him', to: 'users#follows_him'
     end
 
     resource :user, only: [:show] do

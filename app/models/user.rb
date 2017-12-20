@@ -11,6 +11,7 @@ class User < ApplicationRecord
 
     #ratings
     has_many :ratings  
+    has_many :rated_movies, through: :ratings, source: :movie
     
     #recommendations
     has_many :own_recommendations, class_name: "Recommendation", foreign_key: :from_user_id

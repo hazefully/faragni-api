@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       resources :ratings
       resources :recommendations, only: [:index, :show]
       get '/recommendations/status/:status', to: 'recommendations#index'
+      get '/rated_movies', to: 'movies#get_rated_movies'
       get '/get_new_recommendations', to: 'movies#get_new_recommendations'
     end
     

@@ -56,6 +56,13 @@ class MoviesController < ApplicationController
     render json: @recommended_movies.to_json(:except => :id, :methods => [:Poster, :Genre, :MovieID])
   end
 
+  #GET /user/rated_movies
+  # not implemented yet, this should call the training model
+  def get_rated_movies
+    user = current_user
+    @rated_movies = user.rated_movies
+    render json: @rated_movies.to_json(:except => :id, :methods => [:Poster, :Genre, :MovieID])
+  end
   # GET /movies/:movie_id/add_to_watchlist
   def add_to_watchlist
     if current_user.add_to_watchlist(params[:movie_id])

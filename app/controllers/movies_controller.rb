@@ -1,7 +1,6 @@
 
 class MoviesController < ApplicationController
-  include RecommendationEngine
-    
+
   before_action :set_movie, only: [:show, :update, :destroy]
   before_action :set_single_user, only: :index
   skip_before_action :authenticate_user, only: [:index, :show]
@@ -55,9 +54,11 @@ class MoviesController < ApplicationController
   # not implemented yet, this should call the training model
   def get_new_recommendations
     user = current_user
-    @recommended_movies = RecommendationEngine::Recommender.recommend(user)
+    @recommended_movies = recommend(user)
     render json: @recommended_movies.to_json(:except => :id, :methods => [:Poster, :Genre, :MovieID])
   end
+
+
 
   #GET /user/rated_movies
   # not implemented yet, this should call the training model
@@ -88,6 +89,14 @@ class MoviesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_movie
       @movie = Movie.find(params[:id])
+    end
+
+    def recommend user
+      rated_movies_ids = user.ratings.select{|rating| rating.Rating >= 3}.pluck(:id)
+      rated_movies_imdb_ids = Movie.find(rated_movies_ids).pluck(:imdbID).join(" ")
+      movies_ids = `cd lib/recommendation_engine && python final_rbm_model.py #{rated_movies_imdb_ids}`
+      movies_ids = movies_ids.chomp("\n").split(" ").map{|id| "tt#{id.rjust(7,"0")}"}
+      return Movie.where(imdbID: movies_ids)
     end
 
     def set_single_user

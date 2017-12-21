@@ -17,14 +17,16 @@ CSV.foreach("lib/movies.csv", :headers => true, :col_sep => "\t") do |row|
   begin
     imdb_movie = {}
     begin
-      imdb_movie = RestClient::Request.execute(:method => :get, :url => "https://www.omdbapi.com/?i=tt#{imdb_id}&apikey=f51215f6", :timeout => 5) 
-    rescue RestClient::Unauthorized
-      imdb_movie = RestClient::Request.execute(:method => :get, :url => "https://www.omdbapi.com/?i=tt#{imdb_id}&apikey=76dc84ae", :timeout => 5)     
-    else
+      imdb_movie = RestClient::Request.execute(:method => :get, :url => "https://www.omdbapi.com/?i=tt#{imdb_id}&apikey=76dc84ae", :timeout => 5) 
+    rescue => exception
       begin
-        imdb_movie = RestClient::Request.execute(:method => :get, :url => "https://www.omdbapi.com/?i=tt#{imdb_id}&apikey=76dc84ae", :timeout => 8)     
+        imdb_movie = RestClient::Request.execute(:method => :get, :url => "https://www.omdbapi.com/?i=tt#{imdb_id}&apikey=e0bc3738", :timeout => 6)     
       rescue => exception
-        imdb_movie = RestClient::Request.execute(:method => :get, :url => "https://www.omdbapi.com/?i=tt#{imdb_id}&apikey=1fff86fb", :timeout => 12)             
+        begin
+          imdb_movie = RestClient::Request.execute(:method => :get, :url => "https://www.omdbapi.com/?i=tt#{imdb_id}&apikey=ece84334", :timeout => 8)     
+        rescue => exception
+          imdb_movie = RestClient::Request.execute(:method => :get, :url => "https://www.omdbapi.com/?i=tt#{imdb_id}&apikey=1fff86fb", :timeout => 12)             
+        end
       end
     end
     movie_json = JSON.parse(imdb_movie.body)

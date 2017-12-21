@@ -10,11 +10,14 @@ Rails.application.configure do
   # Rake tasks automatically ignore this option for performance.
   config.eager_load = true
 
-  config.action_controller.asset_host = 'https://faragni-api.herokuapp.com/'
+  config.action_controller.asset_host = 'https://faragni-api1.herokuapp.com/'
   
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
+
+  config.autoload_paths += Dir["#{Rails.root}/lib"]    
+  config.autoload_paths += Dir["#{Rails.root}/lib/recommendation_engine"]
 
   # Attempt to read encrypted secrets from `config/secrets.yml.enc`.
   # Requires an encryption key in `ENV["RAILS_MASTER_KEY"]` or

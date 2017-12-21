@@ -8,11 +8,11 @@ class MoviesController < ApplicationController
     if @single_user.present?
       @movies = @single_user.watchlist
     else
-      @movies = params[:genre].present?? Genre.where(Name: params[:genre]).first.movies : Movie.all
+      @movies = params[:genre].present?? Genre.where(Name: params[:genre]).first.movies.limit(100) : Movie.limit(100)
       if(params[:criteria].present?)
-        @movies = @movies.order(params[:criteria].to_sym).all
+        @movies = @movies.order(params[:criteria].to_sym).limit(100)
       else
-        @movies = @movies.all
+        @movies = @movies.limit(100).all
       end
     end
     render json: @movies.to_json(:except => :id, :methods => [:Poster, :Genre, :MovieID])

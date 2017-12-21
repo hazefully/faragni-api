@@ -2,7 +2,11 @@ module RecommendationEngine
   class Recommender
     # Machine learning magic!
     def self.recommend user
-      return Movie.all
+      rated_movies_ids = user.ratings.select{|rating| rating.Rating >= 3}
+      rated_movies_imdb_ids = Movie.find(rated_movies_ids).pluck(:imdbID).jpin(" ")
+      movies_ids = `cd lib/recommendation_engine && python final_rbm_model.py #{rated_movies_imdb_ids}`
+      movies_ids = movies_ids.map{|id| "tt#{id.rjust(7,"0")}"}
+      return Movie.where("movies.imdbID IN ?", movies_ids)
     end
   end
 end

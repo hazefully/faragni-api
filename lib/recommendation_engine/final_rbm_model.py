@@ -99,7 +99,7 @@ def main():
     for movie in recommmendations:
         s += str(long(movie))
         s += str(" ")
-    print s
+    print(s)
         
 if __name__ == "__main__":
     main()

@@ -90,7 +90,7 @@ class Recommendations():
 def main():
     ids = []
     for arg in sys.argv[1:]:
-        ids.append(arg);
+        ids.append(int(arg));
     if len(ids) == 0:
         return;
     recommender = Recommendations();

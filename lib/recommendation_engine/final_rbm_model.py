@@ -97,7 +97,7 @@ def main():
     recommmendations = recommender.getRecommendation(ids);
     s = ''
     for movie in recommmendations:
-        s += str(long(movie))
+        s += str(int(movie))
         s += str(" ")
     print(s)
         

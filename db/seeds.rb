@@ -16,19 +16,9 @@ CSV.foreach("lib/movies.csv", :headers => true, :col_sep => "\t") do |row|
   next if Movie.where(imdbID: "tt#{imdb_id}").present?
   begin
     imdb_movie = {}
-    begin
-      imdb_movie = RestClient::Request.execute(:method => :get, :url => "https://www.omdbapi.com/?i=tt#{imdb_id}&apikey=76dc84ae", :timeout => 5) 
-    rescue => exception
-      begin
-        imdb_movie = RestClient::Request.execute(:method => :get, :url => "https://www.omdbapi.com/?i=tt#{imdb_id}&apikey=e0bc3738", :timeout => 6)     
-      rescue => exception
-        begin
-          imdb_movie = RestClient::Request.execute(:method => :get, :url => "https://www.omdbapi.com/?i=tt#{imdb_id}&apikey=ece84334", :timeout => 8)     
-        rescue => exception
-          imdb_movie = RestClient::Request.execute(:method => :get, :url => "https://www.omdbapi.com/?i=tt#{imdb_id}&apikey=1fff86fb", :timeout => 12)             
-        end
-      end
-    end
+    imdb_movie = RestClient::Request.execute(:method => :get, 
+                                             :url => "https://www.omdbapi.com/?i=tt#{imdb_id}&apikey=#{ENV.fetch("OMDB_API_KEY")}",
+                                             :timeout => 5) 
     movie_json = JSON.parse(imdb_movie.body)
     movie_json =  Hash[movie_json.map{|(k,v)| [k.to_sym,v]}]
     [:Response, :DVD, :Production, :Type, :Rated, :Ratings].each do |key|
